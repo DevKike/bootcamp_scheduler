@@ -5,14 +5,14 @@ import com.technologies.microservice.domain.model.Technology;
 import com.technologies.microservice.domain.spi.ITechnologyPersistencePort;
 
 public class TechnologyUseCase implements ITechnologyServicePort {
-    private ITechnologyPersistencePort technologyPersistencePort;
+    private final ITechnologyPersistencePort technologyPersistencePort;
 
     public TechnologyUseCase(ITechnologyPersistencePort technologyPersistencePort) {
         this.technologyPersistencePort = technologyPersistencePort;
     }
 
     @Override
-    public void saveTechnology(Technology technology) {
-        technologyPersistencePort.saveTechnology(technology);
+    public void addTechnology(Technology technology) {
+        technologyPersistencePort.addTechnology(technology);
     }
 }
