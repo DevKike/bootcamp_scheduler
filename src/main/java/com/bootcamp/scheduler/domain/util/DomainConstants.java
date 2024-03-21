@@ -10,7 +10,6 @@ public class DomainConstants {
         DESCRIPTION
     }
 
-    public static final String FIELD_NAME_NULL_MESSAGE = "Field 'name' can't be null";
-    public static final String FIELD_DESCRIPTION_NULL_MESSAGE = "Field 'description' can't be null";
-
+    public static final String FIELD_NAME_NULL_MESSAGE = "Field 'name' cannot be null";
+    public static final String FIELD_DESCRIPTION_NULL_MESSAGE = "Field 'description' cannot be null";
 }

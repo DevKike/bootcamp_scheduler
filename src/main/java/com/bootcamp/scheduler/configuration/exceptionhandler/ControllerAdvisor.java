@@ -2,6 +2,7 @@ package com.bootcamp.scheduler.configuration.exceptionhandler;
 
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
+import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,6 +18,16 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleEmptyFieldException(EmptyFieldException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 String.format(Constants.EMPTY_FIELD_EXCEPTION_MESSAGE, exception.getMessage()),
-                HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()));
+                HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()
+        ));
+    }
+
+    @ExceptionHandler(MaxSizeExceededException.class)
+    public ResponseEntity<ExceptionResponse> handleMaxSizeExceededException(MaxSizeExceededException exception) {
+        return ResponseEntity.badRequest().body(new ExceptionResponse(
+                exception.getMessage(),
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now())
+        );
     }
 }

@@ -1,6 +1,7 @@
 package com.bootcamp.scheduler.domain.model;
 
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
+import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
 import com.bootcamp.scheduler.domain.util.DomainConstants;
 
 import static java.util.Objects.requireNonNull;
@@ -14,8 +15,14 @@ public class Technology {
         if (name == null || name.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
         }
+        if (name.length() > 50) {
+            throw new MaxSizeExceededException("name", 50);
+        }
         if (description == null || description.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.DESCRIPTION.toString());
+        }
+        if (description.length() > 90) {
+            throw new MaxSizeExceededException("description", 90);
         }
 
         this.id = id;
