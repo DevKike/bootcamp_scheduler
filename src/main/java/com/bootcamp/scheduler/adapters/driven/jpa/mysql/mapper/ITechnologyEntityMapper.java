@@ -1,1 +1,0 @@
-package com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper;import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;import com.bootcamp.scheduler.domain.model.Technology;import org.mapstruct.Mapper;@Mapper(componentModel = "spring")public interface ITechnologyEntityMapper {    TechnologyEntity toEntity(Technology technology);}
