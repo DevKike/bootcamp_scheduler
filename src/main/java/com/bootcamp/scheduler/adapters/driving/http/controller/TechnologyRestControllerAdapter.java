@@ -5,6 +5,7 @@ import com.bootcamp.scheduler.adapters.driving.http.dto.response.TechnologyRespo
 import com.bootcamp.scheduler.adapters.driving.http.mapper.ITechnologyRequestMapper;
 import com.bootcamp.scheduler.adapters.driving.http.mapper.ITechnologyResponseMapper;
 import com.bootcamp.scheduler.domain.api.ITechnologyServicePort;
+import com.bootcamp.scheduler.domain.api.usecase.SortDirection;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -27,7 +28,7 @@ public class TechnologyRestControllerAdapter {
     }
 
     @GetMapping("/getAllTechnologies")
-    public ResponseEntity<List<TechnologyResponse>> getAllTechnologies(@RequestParam Integer page, @RequestParam Integer size) {
-        return ResponseEntity.ok(technologyResponseMapper.toTechnologyResponseList(technologyServicePort.getAllTechnologies(page, size)));
+    public ResponseEntity<List<TechnologyResponse>> getAllTechnologies(@RequestParam Integer page, @RequestParam Integer size, @RequestParam SortDirection direction) {
+        return ResponseEntity.ok(technologyResponseMapper.toTechnologyResponseList(technologyServicePort.getAllTechnologies(page, size, direction)));
     }
 }
