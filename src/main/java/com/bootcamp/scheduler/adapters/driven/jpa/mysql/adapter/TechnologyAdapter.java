@@ -16,7 +16,7 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
     @Override
     public void addTechnology(Technology technology) {
         if (technologyRepository.findByName(technology.getName()).isPresent()) {
-            throw new TechnologyAlreadyExistsException();
+            throw new TechnologyAlreadyExistsException("Technology already exists");
         }
         technologyRepository.save(technologyEntityMapper.toEntity(technology));
     }

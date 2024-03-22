@@ -1,5 +1,6 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
@@ -27,7 +28,16 @@ public class ControllerAdvisor {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
-                LocalDateTime.now())
-        );
+                LocalDateTime.now()
+                ));
+    }
+
+    @ExceptionHandler(TechnologyAlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> technologyAlreadyExistsException(TechnologyAlreadyExistsException exception) {
+        return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
+                exception.getMessage(),
+                HttpStatus.CONFLICT.toString(),
+                LocalDateTime.now()
+        ));
     }
 }
