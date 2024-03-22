@@ -4,6 +4,8 @@ import com.bootcamp.scheduler.domain.api.ITechnologyServicePort;
 import com.bootcamp.scheduler.domain.model.Technology;
 import com.bootcamp.scheduler.domain.spi.ITechnologyPersistencePort;
 
+import java.util.List;
+
 public class TechnologyUseCase implements ITechnologyServicePort {
     private final ITechnologyPersistencePort technologyPersistencePort;
 
@@ -14,5 +16,10 @@ public class TechnologyUseCase implements ITechnologyServicePort {
     @Override
     public void addTechnology(Technology technology) {
         technologyPersistencePort.addTechnology(technology);
+    }
+
+    @Override
+    public List<Technology> getAllTechnologies(Integer page, Integer size) {
+        return technologyPersistencePort.getAllTechnologies(page, size);
     }
 }

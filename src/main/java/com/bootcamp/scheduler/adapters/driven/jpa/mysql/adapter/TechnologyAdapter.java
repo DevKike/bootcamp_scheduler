@@ -1,12 +1,16 @@
 package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp.scheduler.domain.spi.ITechnologyPersistencePort;
 import com.bootcamp.scheduler.domain.model.Technology;
-
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+
+import java.util.List;
 
 @RequiredArgsConstructor
 public class TechnologyAdapter implements ITechnologyPersistencePort {
@@ -20,4 +24,12 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
         }
         technologyRepository.save(technologyEntityMapper.toEntity(technology));
     }
+
+    @Override
+    public List<Technology> getAllTechnologies(Integer page, Integer size) {
+        Pageable pagination = PageRequest.of(page, size);
+        List<TechnologyEntity> technologies = technologyRepository.findAll(pagination).getContent();
+        return technologyEntityMapper.toModelList(technologies);
+    }
+
 }
