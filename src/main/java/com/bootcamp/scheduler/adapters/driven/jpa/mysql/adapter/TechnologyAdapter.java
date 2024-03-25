@@ -9,6 +9,7 @@ import com.bootcamp.scheduler.domain.model.Technology;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.List;
 
@@ -26,10 +27,9 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
     }
 
     @Override
-    public List<Technology> getAllTechnologies(Integer page, Integer size) {
-        Pageable pagination = PageRequest.of(page, size);
+    public List<Technology> getAllTechnologies(Integer page, Integer size, Sort sort) {
+        Pageable pagination = PageRequest.of(page, size, sort);
         List<TechnologyEntity> technologies = technologyRepository.findAll(pagination).getContent();
         return technologyEntityMapper.toModelList(technologies);
     }
-
 }
