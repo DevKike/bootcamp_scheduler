@@ -12,23 +12,23 @@ public class TestData {
         return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION);
     }
 
-    public static Technology getTechnologyDataWithEmptyName() {
-        return new Technology(TECHNOLOGY_ID, "", TECHNOLOGY_DESCRIPTION);
+    public static void getTechnologyDataWithEmptyName() {
+        new Technology(TECHNOLOGY_ID, "", TECHNOLOGY_DESCRIPTION);
     }
 
-    public static Technology getTechnologyDataWithEmptyDescription() {
-        return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "");
+    public static void getTechnologyDataWithEmptyDescription() {
+        new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "");
     }
 
-    public static Technology getTechnologyDataWithNameExceedsAllowedSize() {
-        return new Technology(TECHNOLOGY_ID, "Lorem ipsum dolor sit amet consectetur adipiscing elit montes sed nulla, velit curabitur " +
+    public static void getTechnologyDataWithNameExceedsAllowedSize() {
+        new Technology(TECHNOLOGY_ID, "Lorem ipsum dolor sit amet consectetur adipiscing elit montes sed nulla, velit curabitur " +
                 "elementum eu leo augue porta libero in, id cursus posuere eleifend mus maecenas lacus semper magnis. " +
                 "Ut lectus hendrerit viverra scelerisque fermentum at bibendum, sollicitudin justo et eros luctus nisl vivamus, " +
                 "lacinia duis gravida proin aliquam natoque.", TECHNOLOGY_DESCRIPTION);
     }
 
-    public static Technology getTechnologyDataWithDescriptionExceedsAllowedSize() {
-        return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "Lorem ipsum dolor sit amet consectetur adipiscing elit lectus felis, " +
+    public static void getTechnologyDataWithDescriptionExceedsAllowedSize() {
+        new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "Lorem ipsum dolor sit amet consectetur adipiscing elit lectus felis, " +
                 "aptent elementum blandit fusce pulvinar proin nostra viverra mollis, magna torquent natoque sociis posuere habitant nec congue. " +
                 "Dignissim condimentum morbi eu malesuada curabitur mus aliquam, cursus rutrum primis nulla platea in, " +
                 "praesent luctus tincidunt et turpis tellus. Gravida lobortis non hendrerit egestas phasellus placerat himenaeos bibendum imperdiet," +

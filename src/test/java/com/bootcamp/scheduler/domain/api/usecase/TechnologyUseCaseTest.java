@@ -1,6 +1,5 @@
 package com.bootcamp.scheduler.domain.api.usecase;
 
-import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.model.Technology;
 import com.bootcamp.scheduler.domain.spi.ITechnologyPersistencePort;
 import com.bootcamp.scheduler.testdata.TestData;
@@ -9,7 +8,6 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
-import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)

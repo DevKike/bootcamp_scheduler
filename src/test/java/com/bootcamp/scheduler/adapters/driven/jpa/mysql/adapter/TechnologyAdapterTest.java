@@ -44,9 +44,7 @@ class TechnologyAdapterTest {
         Technology technology = TestData.getValidTechnologyData();
         when(technologyRepository.findByName(technology.getName())).thenReturn(Optional.of(new TechnologyEntity()));
 
-        assertThrows(TechnologyAlreadyExistsException.class, () -> {
-            technologyAdapter.addTechnology(technology);
-        });
+        assertThrows(TechnologyAlreadyExistsException.class, () -> technologyAdapter.addTechnology(technology));
 
         verify(technologyRepository, times(1)).findByName(technology.getName());
 
