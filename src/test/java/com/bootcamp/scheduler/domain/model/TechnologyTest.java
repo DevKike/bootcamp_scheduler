@@ -11,21 +11,21 @@ class TechnologyTest {
 
     @Test
     void itShouldThrowAExceptionWhenNameIsEmpty() {
-        assertThrows(EmptyFieldException.class, TestData::getTechnologyDataWithEmptyName);
+        assertThrows(EmptyFieldException.class, TestData::getTechnologyWithEmptyName);
     }
 
     @Test
     void itShouldThrowAExceptionWhenDescriptionIsEmpty() {
-        assertThrows(EmptyFieldException.class, TestData::getTechnologyDataWithEmptyDescription);
+        assertThrows(EmptyFieldException.class, TestData::getTechnologyWithEmptyDescription);
     }
 
     @Test
     void itShouldThrowAnExceptionWhenNameExceedsAllowedSize() {
-        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyDataWithNameExceedsAllowedSize);
+        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyWithNameExceedingAllowedSize);
     }
 
     @Test
     void itShouldThrowAnExceptionWhenDescriptionExceedsAllowedSize() {
-        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyDataWithDescriptionExceedsAllowedSize);
+        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyWithDescriptionExceedingAllowedSize);
     }
 }

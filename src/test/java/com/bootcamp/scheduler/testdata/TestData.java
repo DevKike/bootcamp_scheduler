@@ -1,5 +1,10 @@
 package com.bootcamp.scheduler.testdata;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driving.http.dto.request.AddTechnologyRequest;
+import com.bootcamp.scheduler.adapters.driving.http.dto.response.TechnologyResponse;
+import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
+import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
 import com.bootcamp.scheduler.domain.model.Technology;
 
 public class TestData {
@@ -8,31 +13,45 @@ public class TestData {
     public static final String TECHNOLOGY_NAME = "MySQL";
     public static final String TECHNOLOGY_DESCRIPTION = "Relational database manager";
 
+    public static AddTechnologyRequest getValidTechnologyRequestData() {
+        return new AddTechnologyRequest(TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION);
+    }
+
+    public static TechnologyResponse getValidTechnologyResponseData() {
+        return new TechnologyResponse(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION);
+    }
+
     public static Technology getValidTechnologyData() {
         return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION);
     }
 
-    public static void getTechnologyDataWithEmptyName() {
-        new Technology(TECHNOLOGY_ID, "", TECHNOLOGY_DESCRIPTION);
+    public static Technology getTechnologyWithEmptyName() {
+        return new Technology(TECHNOLOGY_ID, "", TECHNOLOGY_DESCRIPTION);
     }
 
-    public static void getTechnologyDataWithEmptyDescription() {
-        new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "");
+    public static Technology getTechnologyWithEmptyDescription() {
+        return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "");
     }
 
-    public static void getTechnologyDataWithNameExceedsAllowedSize() {
-        new Technology(TECHNOLOGY_ID, "Lorem ipsum dolor sit amet consectetur adipiscing elit montes sed nulla, velit curabitur " +
-                "elementum eu leo augue porta libero in, id cursus posuere eleifend mus maecenas lacus semper magnis. " +
-                "Ut lectus hendrerit viverra scelerisque fermentum at bibendum, sollicitudin justo et eros luctus nisl vivamus, " +
-                "lacinia duis gravida proin aliquam natoque.", TECHNOLOGY_DESCRIPTION);
+    public static Technology getTechnologyWithNameExceedingAllowedSize() {
+        String longName = "Lorem ipsum dolor sit amet consectetur disciplining elit.";
+        return new Technology(TECHNOLOGY_ID, longName, TECHNOLOGY_DESCRIPTION);
     }
 
-    public static void getTechnologyDataWithDescriptionExceedsAllowedSize() {
-        new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, "Lorem ipsum dolor sit amet consectetur adipiscing elit lectus felis, " +
-                "aptent elementum blandit fusce pulvinar proin nostra viverra mollis, magna torquent natoque sociis posuere habitant nec congue. " +
-                "Dignissim condimentum morbi eu malesuada curabitur mus aliquam, cursus rutrum primis nulla platea in, " +
-                "praesent luctus tincidunt et turpis tellus. Gravida lobortis non hendrerit egestas phasellus placerat himenaeos bibendum imperdiet," +
-                " sapien dui vulputate taciti molestie orci erat fringilla lacus laoreet, nam nunc quam id suscipit per porttitor sodales. " +
-                "Urna tempor tortor sollicitudin montes aliquet, tristique nisi dapibus nullam eleifend, sagittis fermentum facilisi convallis.");
+    public static Technology getTechnologyWithDescriptionExceedingAllowedSize() {
+        String longDescription = "Lorem ipsum dolor sit amet consectetur adipiscing elit curabitur, conubia congue elementum.";
+        return new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, longDescription);
+    }
+
+    public static EmptyFieldException getEmptyFieldException() {
+        return new EmptyFieldException("emptyField");
+    }
+
+    public static MaxSizeExceededException getMaxSizeExceededException() {
+        return new MaxSizeExceededException("Max size exceeded for the request");
+    }
+
+    public static TechnologyAlreadyExistsException getTechnologyAlreadyExistsException() {
+        return new TechnologyAlreadyExistsException("Technology already exists in the database");
     }
 }
