@@ -11,12 +11,19 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.PageImpl;
 
+import java.util.List;
 import java.util.Optional;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.never;
 
 @ExtendWith(MockitoExtension.class)
 class TechnologyAdapterTest {
@@ -49,5 +56,25 @@ class TechnologyAdapterTest {
         verify(technologyRepository, times(1)).findByName(technology.getName());
 
         verify(technologyRepository, never()).save(any());
+    }
+
+    @Test
+    void itShouldGetAllTechnologiesSuccessfully() {
+        List<TechnologyEntity> technologyEntities = TestData.getTechnologyEntities();
+        List<Technology> expectedTechnologies = TestData.getExpectedTechnologies();
+
+        when(technologyRepository.findAll(any(Pageable.class)))
+                .thenReturn(new PageImpl<>(technologyEntities));
+
+        when(technologyEntityMapper.toModelList(technologyEntities))
+                .thenReturn(expectedTechnologies);
+
+        TechnologyAdapter technologyAdapter = new TechnologyAdapter(technologyRepository, technologyEntityMapper);
+
+        List<Technology> actualTechnologies = technologyAdapter.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT);
+
+        verify(technologyRepository, times(1)).findAll(any(Pageable.class));
+
+        assertEquals(expectedTechnologies, actualTechnologies);
     }
 }

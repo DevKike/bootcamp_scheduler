@@ -1,17 +1,27 @@
 package com.bootcamp.scheduler.testdata;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp.scheduler.adapters.driving.http.dto.request.AddTechnologyRequest;
 import com.bootcamp.scheduler.adapters.driving.http.dto.response.TechnologyResponse;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
 import com.bootcamp.scheduler.domain.model.Technology;
+import org.springframework.data.domain.Sort;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class TestData {
 
     public static final long TECHNOLOGY_ID = 1L;
     public static final String TECHNOLOGY_NAME = "MySQL";
     public static final String TECHNOLOGY_DESCRIPTION = "Relational database manager";
+    public static final Integer PAGE = 0;
+    public static final Integer SIZE = 10;
+    public static final Sort SORT = Sort.by("name");
+    public static final Sort.Direction SORT_ASC = Sort.Direction.ASC;
+    public static final Sort.Direction SORT_DESC = Sort.Direction.DESC;
 
     public static AddTechnologyRequest getValidTechnologyRequestData() {
         return new AddTechnologyRequest(TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION);
@@ -53,5 +63,26 @@ public class TestData {
 
     public static TechnologyAlreadyExistsException getTechnologyAlreadyExistsException() {
         return new TechnologyAlreadyExistsException("Technology already exists in the database");
+    }
+
+    public static List<TechnologyEntity> getTechnologyEntities() {
+        List<TechnologyEntity> technologyEntities = new ArrayList<>();
+        technologyEntities.add(new TechnologyEntity(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        technologyEntities.add(new TechnologyEntity(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        return technologyEntities;
+    }
+
+    public static List<Technology> getExpectedTechnologies() {
+        List<Technology> expectedTechnologies = new ArrayList<>();
+        expectedTechnologies.add(new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        expectedTechnologies.add(new Technology(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        return expectedTechnologies;
+    }
+
+    public static List<TechnologyResponse> getTechnologyResponses() {
+        List<TechnologyResponse> technologyResponses = new ArrayList<>();
+        technologyResponses.add(new TechnologyResponse(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        technologyResponses.add(new TechnologyResponse(TECHNOLOGY_ID, TECHNOLOGY_NAME, TECHNOLOGY_DESCRIPTION));
+        return technologyResponses;
     }
 }
