@@ -16,13 +16,13 @@ public class Technology {
             throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
         }
         if (name.length() > 50) {
-            throw new MaxSizeExceededException("name", 50);
+            throw new MaxSizeExceededException(String.format("%s cannot exceed %d characters", DomainConstants.Field.NAME, DomainConstants.MAX_NAME_LENGTH));
         }
         if (description == null || description.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.DESCRIPTION.toString());
         }
         if (description.length() > 90) {
-            throw new MaxSizeExceededException("description", 90);
+            throw new MaxSizeExceededException(String.format("%s cannot exceed %d characters", DomainConstants.Field.DESCRIPTION, DomainConstants.MAX_DESCRIPTION_LENGTH));
         }
 
         this.id = id;
