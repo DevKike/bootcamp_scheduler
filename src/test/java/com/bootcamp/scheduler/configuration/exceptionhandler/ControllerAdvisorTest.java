@@ -1,5 +1,6 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
@@ -12,7 +13,8 @@ import org.springframework.http.ResponseEntity;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 class ControllerAdvisorTest {
 
@@ -56,4 +58,18 @@ class ControllerAdvisorTest {
         assertNotNull(responseEntity.getBody().getTimestamp());
         assertEquals(LocalDateTime.now().getDayOfYear(), responseEntity.getBody().getTimestamp().getDayOfYear());
     }
+
+    @Test
+    void itShouldHandleTechnologyNotFoundExceptionSuccessfully() {
+        TechnologiesNotFoundException exception = TestData.getTechnologiesNotFoundException();
+
+        ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.technologiesNotFoundException(exception);
+
+        assertEquals(HttpStatus.NOT_FOUND, responseEntity.getStatusCode());
+        assertEquals(exception.getMessage(), Objects.requireNonNull(responseEntity.getBody()).getMessage());
+        assertEquals(HttpStatus.NOT_FOUND.toString(), responseEntity.getBody().getStatus());
+        assertNotNull(responseEntity.getBody().getTimestamp());
+        assertEquals(LocalDateTime.now().getDayOfYear(), responseEntity.getBody().getTimestamp().getDayOfYear());
+    }
+
 }

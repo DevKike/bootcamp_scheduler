@@ -5,7 +5,7 @@ import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
 import com.bootcamp.scheduler.testdata.TestData;
 import org.junit.jupiter.api.Test;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class TechnologyTest {
 
