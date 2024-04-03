@@ -1,8 +1,8 @@
 package com.bootcamp.scheduler.testdata;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.adapters.driving.http.dto.request.AddTechnologyRequest;
 import com.bootcamp.scheduler.adapters.driving.http.dto.response.TechnologyResponse;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
@@ -62,12 +62,12 @@ public class TestData {
         return new MaxSizeExceededException("Max size exceeded for the request");
     }
 
-    public static TechnologyAlreadyExistsException getTechnologyAlreadyExistsException() {
-        return new TechnologyAlreadyExistsException("Technology already exists in the database");
+    public static AlreadyExistsException getTechnologyAlreadyExistsException() {
+        return new AlreadyExistsException("Technology already exists in the database");
     }
 
-    public static TechnologiesNotFoundException getTechnologiesNotFoundException() {
-        return new TechnologiesNotFoundException("No registered technologies found");
+    public static NotFoundException getTechnologiesNotFoundException() {
+        return new NotFoundException("No registered technologies found");
     }
 
     public static List<TechnologyEntity> getTechnologyEntities() {

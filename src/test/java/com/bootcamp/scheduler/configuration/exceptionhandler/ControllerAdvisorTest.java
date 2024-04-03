@@ -1,7 +1,7 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
@@ -48,7 +48,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleTechnologyAlreadyExistsExceptionSuccessfully() {
-        TechnologyAlreadyExistsException exception = TestData.getTechnologyAlreadyExistsException();
+        AlreadyExistsException exception = TestData.getTechnologyAlreadyExistsException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.technologyAlreadyExistsException(exception);
 
@@ -61,7 +61,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleTechnologyNotFoundExceptionSuccessfully() {
-        TechnologiesNotFoundException exception = TestData.getTechnologiesNotFoundException();
+        NotFoundException exception = TestData.getTechnologiesNotFoundException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.technologiesNotFoundException(exception);
 

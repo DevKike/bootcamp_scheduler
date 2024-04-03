@@ -1,7 +1,7 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
@@ -34,8 +34,8 @@ public class ControllerAdvisor {
                 ));
     }
 
-    @ExceptionHandler(TechnologyAlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> technologyAlreadyExistsException(TechnologyAlreadyExistsException exception) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> technologyAlreadyExistsException(AlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT.toString(),
@@ -43,8 +43,8 @@ public class ControllerAdvisor {
         ));
     }
 
-    @ExceptionHandler(TechnologiesNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> technologiesNotFoundException(TechnologiesNotFoundException exception) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponse> technologiesNotFoundException(NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),

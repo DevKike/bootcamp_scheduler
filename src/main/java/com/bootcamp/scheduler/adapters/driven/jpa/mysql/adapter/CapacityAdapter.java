@@ -1,6 +1,6 @@
 package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ICapacityEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ICapacityRepository;
 import com.bootcamp.scheduler.domain.model.Capacity;
@@ -15,7 +15,7 @@ public class CapacityAdapter implements ICapacityPersistencePort {
     @Override
     public void addCapacity(Capacity capacity) {
         if (capacityRepository.findByName(capacity.getName()).isPresent()) {
-            throw new TechnologyAlreadyExistsException("Capacity already exists");
+            throw new AlreadyExistsException("Capacity already exists");
         }
 
         capacityRepository.save(capacityEntityMapper.toEntity(capacity));
