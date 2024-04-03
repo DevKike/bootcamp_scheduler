@@ -2,8 +2,10 @@ package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NoTechnologiesFoundException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
+
 import com.bootcamp.scheduler.domain.spi.ITechnologyPersistencePort;
 import com.bootcamp.scheduler.domain.model.Technology;
 import lombok.RequiredArgsConstructor;
@@ -30,6 +32,10 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
     public List<Technology> getAllTechnologies(Integer page, Integer size, Sort sort) {
         Pageable pagination = PageRequest.of(page, size, sort);
         List<TechnologyEntity> technologies = technologyRepository.findAll(pagination).getContent();
+
+        if (technologies.isEmpty()) {
+            throw new NoTechnologiesFoundException("No registered technologies found");
+        }
         return technologyEntityMapper.toModelList(technologies);
     }
 }

@@ -1,6 +1,7 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NoTechnologiesFoundException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
 import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
@@ -19,7 +20,8 @@ public class ControllerAdvisor {
     public ResponseEntity<ExceptionResponse> handleEmptyFieldException(EmptyFieldException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 String.format(Constants.EMPTY_FIELD_EXCEPTION_MESSAGE, exception.getMessage()),
-                HttpStatus.BAD_REQUEST.toString(), LocalDateTime.now()
+                HttpStatus.BAD_REQUEST.toString(),
+                LocalDateTime.now()
         ));
     }
 
@@ -40,4 +42,15 @@ public class ControllerAdvisor {
                 LocalDateTime.now()
         ));
     }
+
+    @ExceptionHandler(NoTechnologiesFoundException.class)
+    public ResponseEntity<ExceptionResponse> noTechnologiesFoundException(NoTechnologiesFoundException exception) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
+                exception.getMessage(),
+                HttpStatus.NOT_FOUND.toString(),
+                LocalDateTime.now()
+
+        ));
+    }
 }
+
