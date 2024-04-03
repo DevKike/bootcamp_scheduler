@@ -15,7 +15,6 @@ import org.mockito.MockitoAnnotations;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
-import java.util.ArrayList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
@@ -58,13 +57,9 @@ class TechnologyRestControllerAdapterTest {
 
     @Test
     void itShouldGetAllTechnologiesInAscendingOrder() {
-        List<Technology> technologies = new ArrayList<>();
-        technologies.add(new Technology(1L, "Java", "Example"));
-        technologies.add(new Technology(2L, "Python", "Example"));
+        List<Technology> technologies = TestData.getExpectedTechnologies();
 
-        List<TechnologyResponse> expectedResponses = new ArrayList<>();
-        expectedResponses.add(new TechnologyResponse(1L, "Java", "Example"));
-        expectedResponses.add(new TechnologyResponse(2L, "Python", "Example"));
+        List<TechnologyResponse> expectedResponses = TestData.getTechnologyResponses();
 
         when(technologyServicePort.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT_ASC))
                 .thenReturn(technologies);
