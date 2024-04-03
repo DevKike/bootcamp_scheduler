@@ -48,7 +48,7 @@ class TechnologyAdapterTest {
     }
 
     @Test
-    void itShouldThrowExceptionWhenSavingDuplicateTechnology() {
+    void itShouldThrowExceptionWhenSavingDuplicateTechnologySuccessfully() {
         Technology technology = TestData.getValidTechnologyData();
         when(technologyRepository.findByName(technology.getName())).thenReturn(Optional.of(new TechnologyEntity()));
 
@@ -80,7 +80,7 @@ class TechnologyAdapterTest {
     }
 
     @Test
-    void itShouldThrowAnExceptionWhenNoRegisteredTechnologiesFound() {
+    void itShouldThrowAnExceptionWhenNoRegisteredTechnologiesFoundSuccessfully() {
         when(technologyRepository.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of()));
 

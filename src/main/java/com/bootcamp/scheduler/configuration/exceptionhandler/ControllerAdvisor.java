@@ -44,7 +44,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(TechnologiesNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> noTechnologiesFoundException(TechnologiesNotFoundException exception) {
+    public ResponseEntity<ExceptionResponse> technologiesNotFoundException(TechnologiesNotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),
