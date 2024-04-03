@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "technology")
 @AllArgsConstructor
@@ -22,4 +24,7 @@ public class TechnologyEntity {
 
     @Column(name = "description")
     private String description;
+
+    @ManyToMany(mappedBy = "technologies")
+    private Set<CapacityEntity> capacities;
 }
