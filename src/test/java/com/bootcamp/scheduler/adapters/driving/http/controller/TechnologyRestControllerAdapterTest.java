@@ -58,7 +58,6 @@ class TechnologyRestControllerAdapterTest {
     @Test
     void itShouldGetAllTechnologiesInAscendingOrder() {
         List<Technology> technologies = TestData.getExpectedTechnologies();
-
         List<TechnologyResponse> expectedResponses = TestData.getTechnologyResponses();
 
         when(technologyServicePort.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT_ASC))
@@ -78,7 +77,6 @@ class TechnologyRestControllerAdapterTest {
     @Test
     void itShouldGetAllTechnologiesInDescendingOrder() {
         List<Technology> technologies = TestData.getExpectedTechnologies();
-
         List<TechnologyResponse> expectedResponses = TestData.getTechnologyResponses();
 
         when(technologyServicePort.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT_DESC))
