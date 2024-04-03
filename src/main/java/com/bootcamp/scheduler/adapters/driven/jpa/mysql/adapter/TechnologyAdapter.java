@@ -2,7 +2,7 @@ package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NoTechnologiesFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 
@@ -34,7 +34,7 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
         List<TechnologyEntity> technologies = technologyRepository.findAll(pagination).getContent();
 
         if (technologies.isEmpty()) {
-            throw new NoTechnologiesFoundException("No registered technologies found");
+            throw new TechnologiesNotFoundException("No registered technologies found");
         }
         return technologyEntityMapper.toModelList(technologies);
     }
