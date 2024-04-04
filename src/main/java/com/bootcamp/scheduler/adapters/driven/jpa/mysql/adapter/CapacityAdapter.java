@@ -39,20 +39,14 @@ public class CapacityAdapter implements ICapacityPersistencePort {
         }
 
         CapacityEntity capacityEntity = capacityOptional.get();
-
-        // Crear un conjunto para almacenar las entidades de tecnología asociadas
         Set<TechnologyEntity> technologyEntities = new HashSet<>();
 
-        // Iterar sobre los identificadores de tecnología y buscar las entidades correspondientes
         for (Long technologyId : technologyIds) {
             Optional<TechnologyEntity> technologyOptional = technologyRepository.findById(technologyId);
             technologyOptional.ifPresent(technologyEntities::add);
         }
 
-        // Asignar las tecnologías recuperadas al conjunto de tecnologías de la capacidad
         capacityEntity.setTechnologies(technologyEntities);
-
-        // Guardar los cambios en la base de datos
         capacityRepository.save(capacityEntity);
     }
 }
