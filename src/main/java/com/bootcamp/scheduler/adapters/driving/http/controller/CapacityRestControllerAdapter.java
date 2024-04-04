@@ -7,10 +7,9 @@ import com.bootcamp.scheduler.domain.api.ICapacityServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/capacity")
@@ -23,6 +22,12 @@ public class CapacityRestControllerAdapter {
     @PostMapping("/add")
     public ResponseEntity<Void> addCapacity(@RequestBody AddCapacityRequest request) {
         capacityServicePort.addCapacity(capacityRequestMapper.addRequestToCapacity(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/capacities/{capacityId}/technologies")
+    public ResponseEntity<Void> addTechnologiesToCapacity(@PathVariable Long capacityId, @RequestBody Set<Long> technologyIds) {
+        capacityServicePort.associateTechnologiesWithCapacity(capacityId, technologyIds);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

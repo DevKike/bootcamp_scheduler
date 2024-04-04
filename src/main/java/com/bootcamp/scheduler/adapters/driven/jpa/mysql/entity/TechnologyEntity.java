@@ -25,6 +25,6 @@ public class TechnologyEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "technologies")
+    @ManyToMany(mappedBy = "technologies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private Set<CapacityEntity> capacities;
 }

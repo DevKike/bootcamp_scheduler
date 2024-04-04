@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface ICapacityRepository extends JpaRepository<CapacityEntity, Long> {
     Optional<CapacityEntity> findByName(String name);
+    Optional<CapacityEntity> findById(Long id);
 }

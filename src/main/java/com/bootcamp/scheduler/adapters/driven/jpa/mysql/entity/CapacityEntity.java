@@ -25,12 +25,12 @@ public class CapacityEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(
             name = "capacity_technologies",
             joinColumns = @JoinColumn(name = "capacity_id"),
             inverseJoinColumns = @JoinColumn(name = "technology_id")
     )
-
     private Set<TechnologyEntity> technologies;
+
 }
