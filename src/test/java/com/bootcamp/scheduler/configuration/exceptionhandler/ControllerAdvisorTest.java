@@ -4,7 +4,7 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundExcept
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.testdata.TestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleMaxSizeExceededExceptionSuccessfully() {
-        MaxSizeExceededException exception = TestData.getMaxSizeExceededException();
+        SizeException exception = TestData.getMaxSizeExceededException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.handleMaxSizeExceededException(exception);
 

@@ -7,6 +7,7 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundExcept
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ICapacityEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ICapacityRepository;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Capacity;
 import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
 import lombok.RequiredArgsConstructor;
@@ -39,14 +40,34 @@ public class CapacityAdapter implements ICapacityPersistencePort {
         }
 
         CapacityEntity capacityEntity = capacityOptional.get();
-        Set<TechnologyEntity> technologyEntities = new HashSet<>();
 
-        for (Long technologyId : technologyIds) {
-            Optional<TechnologyEntity> technologyOptional = technologyRepository.findById(technologyId);
-            technologyOptional.ifPresent(technologyEntities::add);
+        if (capacityEntity.getTechnologies().size() + technologyIds.size() < 3) {
+            throw new SizeException("Capacity must have at least 3 associated technologies");
         }
 
-        capacityEntity.setTechnologies(technologyEntities);
+        if (capacityEntity.getTechnologies().size() + technologyIds.size() > 20) {
+            throw new SizeException("Capacity can have maximum 20 associated technologies");
+        }
+
+        for (Long technologyId : technologyIds) {
+            for (TechnologyEntity technology : capacityEntity.getTechnologies()) {
+                if (technology.getId().equals(technologyId)) {
+                    throw new AlreadyExistsException("Capacity already has technology with id: " + technologyId);
+                }
+            }
+        }
+
+        Set<TechnologyEntity> newTechnologies = new HashSet<>();
+        for (Long technologyId : technologyIds) {
+            Optional<TechnologyEntity> technologyOptional = technologyRepository.findById(technologyId);
+            if (technologyOptional.isPresent()) {
+                newTechnologies.add(technologyOptional.get());
+            } else {
+                throw new NotFoundException("Technology with id " + technologyId + " not found");
+            }
+        }
+
+        capacityEntity.getTechnologies().addAll(newTechnologies);
         capacityRepository.save(capacityEntity);
     }
 }

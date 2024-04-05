@@ -4,7 +4,7 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsE
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,13 +25,13 @@ public class ControllerAdvisor {
         ));
     }
 
-    @ExceptionHandler(MaxSizeExceededException.class)
-    public ResponseEntity<ExceptionResponse> handleMaxSizeExceededException(MaxSizeExceededException exception) {
+    @ExceptionHandler(SizeException.class)
+    public ResponseEntity<ExceptionResponse> sizeException(SizeException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
-                ));
+        ));
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
@@ -53,4 +53,3 @@ public class ControllerAdvisor {
         ));
     }
 }
-
