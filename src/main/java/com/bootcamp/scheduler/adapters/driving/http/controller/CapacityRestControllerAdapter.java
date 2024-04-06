@@ -25,7 +25,7 @@ public class CapacityRestControllerAdapter {
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 
-    @PostMapping("/capacities/{capacityId}/technologies")
+    @PostMapping("/{capacityId}/add/technologies")
     public ResponseEntity<Void> addTechnologiesToCapacity(@PathVariable Long capacityId, @RequestBody Set<Long> technologyIds) {
         capacityServicePort.associateTechnologiesWithCapacity(capacityId, technologyIds);
         return ResponseEntity.status(HttpStatus.CREATED).build();

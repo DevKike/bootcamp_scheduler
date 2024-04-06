@@ -12,9 +12,7 @@ import com.bootcamp.scheduler.domain.model.Capacity;
 import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
 import lombok.RequiredArgsConstructor;
 
-import java.util.HashSet;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 
 @RequiredArgsConstructor
 public class CapacityAdapter implements ICapacityPersistencePort {
@@ -50,10 +48,10 @@ public class CapacityAdapter implements ICapacityPersistencePort {
         }
 
         for (Long technologyId : technologyIds) {
-            for (TechnologyEntity technology : capacityEntity.getTechnologies()) {
-                if (technology.getId().equals(technologyId)) {
-                    throw new AlreadyExistsException("Capacity already has technology with id: " + technologyId);
-                }
+            boolean technologyExists = capacityEntity.getTechnologies().stream()
+                    .anyMatch(tech -> tech.getId().equals(technologyId));
+            if (technologyExists) {
+                throw new AlreadyExistsException("Capacity already has technology with id: " + technologyId);
             }
         }
 
