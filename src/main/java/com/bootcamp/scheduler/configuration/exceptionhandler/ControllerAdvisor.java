@@ -26,7 +26,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(SizeException.class)
-    public ResponseEntity<ExceptionResponse> sizeException(SizeException exception) {
+    public ResponseEntity<ExceptionResponse> handleSizeException(SizeException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
@@ -35,7 +35,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> technologyAlreadyExistsException(AlreadyExistsException exception) {
+    public ResponseEntity<ExceptionResponse> handleTechnologyAlreadyExistsException(AlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT.toString(),
@@ -44,7 +44,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> technologiesNotFoundException(NotFoundException exception) {
+    public ResponseEntity<ExceptionResponse> handleTechnologiesNotFoundException(NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),
