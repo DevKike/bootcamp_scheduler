@@ -6,12 +6,12 @@ import com.bootcamp.scheduler.domain.util.DomainConstants;
 
 import static java.util.Objects.requireNonNull;
 
-public class Technology {
+public class Capacity {
     private final Long id;
     private final String name;
     private String description;
 
-    public Technology(Long id, String name, String description) {
+    public Capacity(Long id, String name, String description) {
         if (name == null || name.trim().isEmpty()) {
             throw new EmptyFieldException(DomainConstants.Field.NAME.toString());
         }

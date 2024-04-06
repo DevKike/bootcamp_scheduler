@@ -1,10 +1,10 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,17 +25,17 @@ public class ControllerAdvisor {
         ));
     }
 
-    @ExceptionHandler(MaxSizeExceededException.class)
-    public ResponseEntity<ExceptionResponse> handleMaxSizeExceededException(MaxSizeExceededException exception) {
+    @ExceptionHandler(SizeException.class)
+    public ResponseEntity<ExceptionResponse> handleSizeException(SizeException exception) {
         return ResponseEntity.badRequest().body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.BAD_REQUEST.toString(),
                 LocalDateTime.now()
-                ));
+        ));
     }
 
-    @ExceptionHandler(TechnologyAlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> technologyAlreadyExistsException(TechnologyAlreadyExistsException exception) {
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologyAlreadyExistsException(AlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT.toString(),
@@ -43,8 +43,8 @@ public class ControllerAdvisor {
         ));
     }
 
-    @ExceptionHandler(TechnologiesNotFoundException.class)
-    public ResponseEntity<ExceptionResponse> technologiesNotFoundException(TechnologiesNotFoundException exception) {
+    @ExceptionHandler(NotFoundException.class)
+    public ResponseEntity<ExceptionResponse> handleTechnologiesNotFoundException(NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),
@@ -53,4 +53,3 @@ public class ControllerAdvisor {
         ));
     }
 }
-

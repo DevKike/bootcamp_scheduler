@@ -1,10 +1,10 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.testdata.TestData;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
@@ -35,7 +35,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleMaxSizeExceededExceptionSuccessfully() {
-        MaxSizeExceededException exception = TestData.getMaxSizeExceededException();
+        SizeException exception = TestData.getMaxSizeExceededException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.handleMaxSizeExceededException(exception);
 
@@ -48,7 +48,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleTechnologyAlreadyExistsExceptionSuccessfully() {
-        TechnologyAlreadyExistsException exception = TestData.getTechnologyAlreadyExistsException();
+        AlreadyExistsException exception = TestData.getTechnologyAlreadyExistsException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.technologyAlreadyExistsException(exception);
 
@@ -61,7 +61,7 @@ class ControllerAdvisorTest {
 
     @Test
     void itShouldHandleTechnologyNotFoundExceptionSuccessfully() {
-        TechnologiesNotFoundException exception = TestData.getTechnologiesNotFoundException();
+        NotFoundException exception = TestData.getTechnologiesNotFoundException();
 
         ResponseEntity<ExceptionResponse> responseEntity = controllerAdvisor.technologiesNotFoundException(exception);
 

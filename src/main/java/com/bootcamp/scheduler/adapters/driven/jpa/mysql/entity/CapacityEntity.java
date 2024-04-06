@@ -9,12 +9,12 @@ import lombok.Setter;
 import java.util.Set;
 
 @Entity
-@Table(name = "technology")
+@Table(name = "capacity")
 @AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
-public class TechnologyEntity {
+public class CapacityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -25,6 +25,12 @@ public class TechnologyEntity {
     @Column(name = "description")
     private String description;
 
-    @ManyToMany(mappedBy = "technologies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<CapacityEntity> capacities;
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(
+            name = "capacity_technologies",
+            joinColumns = @JoinColumn(name = "capacity_id"),
+            inverseJoinColumns = @JoinColumn(name = "technology_id")
+    )
+    private Set<TechnologyEntity> technologies;
+
 }

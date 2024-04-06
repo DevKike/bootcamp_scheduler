@@ -1,8 +1,8 @@
 package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologiesNotFoundException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.TechnologyAlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.ITechnologyEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp.scheduler.domain.model.Technology;
@@ -52,7 +52,7 @@ class TechnologyAdapterTest {
         Technology technology = TestData.getValidTechnologyData();
         when(technologyRepository.findByName(technology.getName())).thenReturn(Optional.of(new TechnologyEntity()));
 
-        assertThrows(TechnologyAlreadyExistsException.class, () -> technologyAdapter.addTechnology(technology));
+        assertThrows(AlreadyExistsException.class, () -> technologyAdapter.addTechnology(technology));
 
         verify(technologyRepository, times(1)).findByName(technology.getName());
 
@@ -84,7 +84,7 @@ class TechnologyAdapterTest {
         when(technologyRepository.findAll(any(Pageable.class)))
                 .thenReturn(new PageImpl<>(List.of()));
 
-        assertThrows(TechnologiesNotFoundException.class, () -> technologyAdapter.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT));
+        assertThrows(NotFoundException.class, () -> technologyAdapter.getAllTechnologies(TestData.PAGE, TestData.SIZE, TestData.SORT));
 
         verify(technologyRepository, times(1)).findAll(any(Pageable.class));
     }
