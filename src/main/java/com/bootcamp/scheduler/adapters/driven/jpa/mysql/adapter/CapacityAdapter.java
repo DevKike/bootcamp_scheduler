@@ -9,7 +9,7 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ICapacityRepo
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Capacity;
-import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;;
+import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
