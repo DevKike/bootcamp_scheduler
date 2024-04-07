@@ -9,8 +9,11 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ICapacityRepo
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.ITechnologyRepository;
 import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Capacity;
-import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
+import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.*;
 
@@ -26,7 +29,7 @@ public class CapacityAdapter implements ICapacityPersistencePort {
             throw new AlreadyExistsException("Capacity already exists");
         }
 
-        capacityRepository.save(capacityEntityMapper.toEntity(capacity));
+        capacityRepository.save(capacityEntityMapper.toModel(capacity));
     }
 
     @Override
@@ -67,5 +70,17 @@ public class CapacityAdapter implements ICapacityPersistencePort {
 
         capacityEntity.getTechnologies().addAll(newTechnologies);
         capacityRepository.save(capacityEntity);
+    }
+
+    @Override
+    public List<Capacity> getAllCapacities(Integer page, Integer size, Sort sort) {
+        Pageable pagination = PageRequest.of(page, size, sort);
+        List<CapacityEntity> capacities = capacityRepository.findAllWithTechnologies(pagination).getContent();
+
+        if (capacities.isEmpty()) {
+            throw new NotFoundException("No registered capacities found");
+        }
+
+        return capacityEntityMapper.toEntityList(capacities);
     }
 }
