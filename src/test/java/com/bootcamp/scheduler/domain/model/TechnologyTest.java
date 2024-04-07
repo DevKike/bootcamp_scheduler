@@ -1,7 +1,7 @@
 package com.bootcamp.scheduler.domain.model;
 
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
+import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.testdata.TestData;
 import org.junit.jupiter.api.Test;
 
@@ -21,11 +21,11 @@ class TechnologyTest {
 
     @Test
     void itShouldThrowAnExceptionWhenNameExceedsAllowedSize() {
-        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyWithNameExceedingAllowedSize);
+        assertThrows(SizeException.class, TestData::getTechnologyWithNameExceedingAllowedSize);
     }
 
     @Test
     void itShouldThrowAnExceptionWhenDescriptionExceedsAllowedSize() {
-        assertThrows(MaxSizeExceededException.class, TestData::getTechnologyWithDescriptionExceedingAllowedSize);
+        assertThrows(SizeException.class, TestData::getTechnologyWithDescriptionExceedingAllowedSize);
     }
 }

@@ -25,7 +25,7 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
         if (technologyRepository.findByName(technology.getName()).isPresent()) {
             throw new AlreadyExistsException("Technology already exists");
         }
-        technologyRepository.save(technologyEntityMapper.toEntity(technology));
+        technologyRepository.save(technologyEntityMapper.toModel(technology));
     }
 
     @Override
@@ -36,6 +36,6 @@ public class TechnologyAdapter implements ITechnologyPersistencePort {
         if (technologies.isEmpty()) {
             throw new NotFoundException("No registered technologies found");
         }
-        return technologyEntityMapper.toModelList(technologies);
+        return technologyEntityMapper.toEntityList(technologies);
     }
 }
