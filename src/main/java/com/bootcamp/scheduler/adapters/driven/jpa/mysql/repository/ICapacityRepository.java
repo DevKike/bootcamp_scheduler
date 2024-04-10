@@ -11,7 +11,11 @@ import java.util.Optional;
 public interface ICapacityRepository extends JpaRepository<CapacityEntity, Long> {
     Optional<CapacityEntity> findByName(String name);
     Optional<CapacityEntity> findById(Long id);
-    Page<CapacityEntity> findAll(Pageable pageable);
+
     @Query("SELECT c FROM CapacityEntity c JOIN FETCH c.technologies")
     Page<CapacityEntity> findAllWithTechnologies(Pageable pageable);
+
+    @Query("SELECT c FROM CapacityEntity c JOIN FETCH c.technologies " +
+            "ORDER BY (SELECT COUNT(t) FROM c.technologies t)")
+    Page<CapacityEntity> findAllWithTechnologiesOrderByTechnologiesCount(Pageable pageable);
 }

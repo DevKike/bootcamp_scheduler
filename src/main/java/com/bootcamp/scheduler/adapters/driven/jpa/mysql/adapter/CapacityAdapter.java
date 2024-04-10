@@ -29,7 +29,7 @@ public class CapacityAdapter implements ICapacityPersistencePort {
             throw new AlreadyExistsException("Capacity already exists");
         }
 
-        capacityRepository.save(capacityEntityMapper.toModel(capacity));
+        capacityRepository.save(capacityEntityMapper.toEntity(capacity));
     }
 
     @Override
@@ -73,14 +73,20 @@ public class CapacityAdapter implements ICapacityPersistencePort {
     }
 
     @Override
-    public List<Capacity> getAllCapacities(Integer page, Integer size, Sort sort) {
+    public List<Capacity> getAllCapacities(Integer page, Integer size, Sort sort, boolean sortByTechnologiesCount) {
         Pageable pagination = PageRequest.of(page, size, sort);
-        List<CapacityEntity> capacities = capacityRepository.findAllWithTechnologies(pagination).getContent();
+        List<CapacityEntity> capacities;
+
+        if (sortByTechnologiesCount) {
+            capacities = capacityRepository.findAllWithTechnologiesOrderByTechnologiesCount(pagination).getContent();
+        } else {
+            capacities = capacityRepository.findAllWithTechnologies(pagination).getContent();
+        }
 
         if (capacities.isEmpty()) {
             throw new NotFoundException("No registered capacities found");
         }
 
-        return capacityEntityMapper.toEntityList(capacities);
+        return capacityEntityMapper.toModelList(capacities);
     }
 }
