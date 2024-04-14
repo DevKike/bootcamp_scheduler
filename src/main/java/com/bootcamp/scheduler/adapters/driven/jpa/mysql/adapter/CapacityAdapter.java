@@ -11,6 +11,9 @@ import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Capacity;
 import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.*;
 
@@ -67,5 +70,33 @@ public class CapacityAdapter implements ICapacityPersistencePort {
 
         capacityEntity.getTechnologies().addAll(newTechnologies);
         capacityRepository.save(capacityEntity);
+    }
+
+    @Override
+    public List<Capacity> getAllCapacities(Integer page, Integer size, Sort sort, boolean sortByTechnologiesCount, boolean orderByTechCountAscending) {
+        Pageable pagination;
+
+        if (sortByTechnologiesCount) {
+            if (orderByTechCountAscending) {
+                pagination = PageRequest.of(page, size, sort.and(Sort.by(Sort.Direction.ASC, "technologies.size")));
+            } else {
+                pagination = PageRequest.of(page, size, sort.and(Sort.by(Sort.Direction.DESC, "technologies.size")));
+            }
+        } else {
+            pagination = PageRequest.of(page, size, sort);
+        }
+
+        List<CapacityEntity> capacities;
+        if (sortByTechnologiesCount) {
+            capacities = capacityRepository.findAllWithTechnologiesOrderByTechnologiesCount(pagination).getContent();
+        } else {
+            capacities = capacityRepository.findAllWithTechnologies(pagination).getContent();
+        }
+
+        if (capacities.isEmpty()) {
+            throw new NotFoundException("No registered capacities found");
+        }
+
+        return capacityEntityMapper.toModelList(capacities);
     }
 }

@@ -7,8 +7,8 @@ import com.bootcamp.scheduler.domain.util.DomainConstants;
 import static java.util.Objects.requireNonNull;
 
 public class Technology {
-    private final Long id;
-    private final String name;
+    private Long id;
+    private String name;
     private String description;
 
     public Technology(Long id, String name, String description) {
@@ -40,6 +40,14 @@ public class Technology {
 
     public String getDescription() {
         return description;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
     }
 
     public void setDescription(String description) {

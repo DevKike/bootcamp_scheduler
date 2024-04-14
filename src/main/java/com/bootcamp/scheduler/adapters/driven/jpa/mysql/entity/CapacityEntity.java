@@ -17,12 +17,11 @@ import java.util.Set;
 public class CapacityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "capacity_id")
     private Long id;
 
-    @Column(name = "name")
     private String name;
 
-    @Column(name = "description")
     private String description;
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
@@ -32,5 +31,4 @@ public class CapacityEntity {
             inverseJoinColumns = @JoinColumn(name = "technology_id")
     )
     private Set<TechnologyEntity> technologies;
-
 }
