@@ -6,10 +6,9 @@ import com.bootcamp.scheduler.domain.api.IBootcampServicePort;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.Set;
 
 @RestController
 @RequestMapping("/bootcamp")
@@ -21,6 +20,12 @@ public class BootcampRestControllerAdapter {
     @PostMapping("/add")
     public ResponseEntity<Void> addBootcamp(@RequestBody AddBootcampRequest request) {
         bootcampServicePort.addBootcamp(bootcampRequestMapper.addRequestToBootcamp(request));
+        return ResponseEntity.status(HttpStatus.CREATED).build();
+    }
+
+    @PostMapping("/{bootcampId}/add/capacities")
+    public ResponseEntity<Void> addCapacitiesToBootcamp(@PathVariable Long bootcampId, @RequestBody Set<Long> capacitiesIds) {
+        bootcampServicePort.associateCapacitiesWithBootcamp(bootcampId, capacitiesIds);
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }
