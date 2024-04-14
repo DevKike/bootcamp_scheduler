@@ -54,7 +54,7 @@ public class BeanConfiguration {
 
     @Bean
     public IBootcampPersistencePort bootcampPersistencePort() {
-        return new BootcampAdapter(bootcampRepository, bootcampEntityMapper);
+        return new BootcampAdapter(bootcampRepository, bootcampEntityMapper, capacityRepository);
     }
 
     @Bean
