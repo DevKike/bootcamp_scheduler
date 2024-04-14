@@ -7,4 +7,5 @@ import java.util.Optional;
 
 public interface IBootcampRepository extends JpaRepository<BootcampEntity, Long> {
     Optional<BootcampEntity> findByName(String name);
+    Optional<BootcampEntity> findById(Long id);
 }
