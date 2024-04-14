@@ -17,18 +17,21 @@ import java.util.Set;
 public class CapacityEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "capacity_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany
     @JoinTable(
             name = "capacity_technologies",
             joinColumns = @JoinColumn(name = "capacity_id"),
             inverseJoinColumns = @JoinColumn(name = "technology_id")
     )
     private Set<TechnologyEntity> technologies;
+
+    @ManyToMany(mappedBy = "capacities")
+    private Set<BootcampEntity> bootcamps;
 }
