@@ -6,6 +6,8 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import java.util.Set;
+
 @Entity
 @Table(name = "bootcamp")
 @AllArgsConstructor
@@ -15,10 +17,18 @@ import lombok.Setter;
 public class BootcampEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "bootcamp_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String description;
+
+    @ManyToMany
+    @JoinTable(
+            name = "bootcamp_capacities",
+            joinColumns = @JoinColumn(name = "bootcamp_id"),
+            inverseJoinColumns = @JoinColumn(name = "capacity_id")
+    )
+    private Set<CapacityEntity> capacities;
 }
