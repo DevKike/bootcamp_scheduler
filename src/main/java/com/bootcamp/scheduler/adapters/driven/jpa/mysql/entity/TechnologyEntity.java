@@ -17,13 +17,13 @@ import java.util.Set;
 public class TechnologyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "technology_id")
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String description;
 
-    @ManyToMany(mappedBy = "technologies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "technologies")
     private Set<CapacityEntity> capacities;
 }
