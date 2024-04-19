@@ -74,15 +74,15 @@ public class CapacityAdapter implements ICapacityPersistencePort {
     }
 
     @Override
-    public List<Capacity> getAllCapacities(Integer page, Integer size, boolean sortByDirection, boolean orderByTechCount) {
-        String direction = sortByDirection ? "ASC" : "DESC";
+    public List<Capacity> getAllCapacities(Integer page, Integer size, boolean isAscending, boolean orderByTechCount) {
+        String direction = isAscending ? "ASC" : "DESC";
         Pageable pagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "name"));
 
         Page<CapacityEntity> capacitiesPage;
 
-        if (sortByDirection && orderByTechCount) {
+        if (isAscending && orderByTechCount) {
             capacitiesPage = capacityRepository.findAllWithTechnologiesOrderByAsc(pagination);
-        } else if (!sortByDirection && orderByTechCount) {
+        } else if (!isAscending && orderByTechCount) {
             capacitiesPage = capacityRepository.findAllWithTechnologiesOrderByDesc(pagination);
         } else {
             capacitiesPage = capacityRepository.findAll(pagination);
