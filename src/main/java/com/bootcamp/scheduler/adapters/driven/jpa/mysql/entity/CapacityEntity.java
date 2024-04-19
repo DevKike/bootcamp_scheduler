@@ -24,7 +24,7 @@ public class CapacityEntity {
 
     private String description;
 
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(fetch = FetchType.EAGER, cascade = CascadeType.ALL)
     @JoinTable(
             name = "capacity_technologies",
             joinColumns = @JoinColumn(name = "capacity_id"),
