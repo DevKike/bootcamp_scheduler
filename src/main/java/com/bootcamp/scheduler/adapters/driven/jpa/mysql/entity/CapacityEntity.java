@@ -24,7 +24,6 @@ public class CapacityEntity {
 
     private String description;
 
-    @ManyToMany
     @JoinTable(
             name = "capacity_technologies",
             joinColumns = @JoinColumn(name = "capacity_id"),
