@@ -3,17 +3,21 @@ package com.bootcamp.scheduler.adapters.driving.http.dto.request;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.time.LocalDate;
 
 @AllArgsConstructor
+@NoArgsConstructor
 @Getter
 public class AddVersionRequest {
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private final LocalDate startDate;
+    private int maxNumOfStudents;
 
-    @JsonFormat(pattern = "yyyy-MM-dd")
-    private final LocalDate endDate;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate startDate;
 
-    private final int maxNumOfStudents;
+    @JsonFormat(pattern = "dd-MM-yyyy")
+    private LocalDate endDate;
+
+    private CreateVersionBootcamp bootcamp;
 }

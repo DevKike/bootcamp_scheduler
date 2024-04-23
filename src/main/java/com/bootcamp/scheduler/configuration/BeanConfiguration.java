@@ -72,7 +72,7 @@ public class BeanConfiguration {
 
     @Bean
     public IVersionPersistencePort versionPersistencePort() {
-        return new VersionAdapter(versionRepository, versionEntityMapper);
+        return new VersionAdapter(versionRepository, bootcampRepository, versionEntityMapper);
     }
 
     @Bean

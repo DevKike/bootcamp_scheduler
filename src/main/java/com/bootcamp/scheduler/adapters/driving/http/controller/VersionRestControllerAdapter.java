@@ -15,9 +15,9 @@ public class VersionRestControllerAdapter {
     private final IVersionServicePort versionServicePort;
     private final IVersionRequestMapper versionRequestMapper;
 
-    @PostMapping("/{bootcampId}/add/")
-    public ResponseEntity<Void> addVersion(@PathVariable Long bootcampId, @RequestBody AddVersionRequest request) {
-        versionServicePort.addVersion(versionRequestMapper.addVersionToBootcamp(request));
+    @PostMapping("/add")
+    public ResponseEntity<Void> addVersion(@RequestBody AddVersionRequest request) {
+        versionServicePort.addVersion(versionRequestMapper.addRequestToVersion(request));
         return ResponseEntity.status(HttpStatus.CREATED).build();
     }
 }

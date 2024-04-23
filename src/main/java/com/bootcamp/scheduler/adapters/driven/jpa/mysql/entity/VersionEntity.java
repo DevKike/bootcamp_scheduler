@@ -19,11 +19,11 @@ public class VersionEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    private int maxNumOfStudents;
+
     private LocalDate startDate;
 
     private LocalDate endDate;
-
-    private int maxNumOfStudents;
 
     @ManyToOne
     @JoinColumn(name = "bootcamp_id")

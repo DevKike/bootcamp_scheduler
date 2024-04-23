@@ -35,7 +35,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> handleTechnologyAlreadyExistsException(AlreadyExistsException exception) {
+    public ResponseEntity<ExceptionResponse> handleAlreadyExistsException(AlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT.toString(),
@@ -44,12 +44,11 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleTechnologiesNotFoundException(NotFoundException exception) {
+    public ResponseEntity<ExceptionResponse> handleNotFoundException(NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),
                 LocalDateTime.now()
-
         ));
     }
 }
