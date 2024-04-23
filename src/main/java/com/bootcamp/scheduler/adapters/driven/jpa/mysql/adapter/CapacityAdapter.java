@@ -11,6 +11,7 @@ import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Capacity;
 import com.bootcamp.scheduler.domain.spi.ICapacityPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -73,25 +74,23 @@ public class CapacityAdapter implements ICapacityPersistencePort {
     }
 
     @Override
-    public List<Capacity> getAllCapacities(Integer page, Integer size, Sort sort, boolean sortByTechnologiesCount, boolean orderByTechCountAscending) {
-        Pageable pagination;
+    public List<Capacity> getAllCapacities(Integer page, Integer size, boolean isAscending, boolean orderByTechCount) {
+        Page<CapacityEntity> capacitiesPage;
+        String direction = isAscending ? "ASC" : "DESC";
+        Pageable pagination = PageRequest.of(page, size);
+        Pageable sortPagination = (PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "name")));
 
-        if (sortByTechnologiesCount) {
-            if (orderByTechCountAscending) {
-                pagination = PageRequest.of(page, size, sort.and(Sort.by(Sort.Direction.ASC, "technologies.size")));
+        if (orderByTechCount) {
+            if (isAscending) {
+                capacitiesPage = capacityRepository.findAllWithTechnologiesOrderByAsc(pagination);
             } else {
-                pagination = PageRequest.of(page, size, sort.and(Sort.by(Sort.Direction.DESC, "technologies.size")));
+                capacitiesPage = capacityRepository.findAllWithTechnologiesOrderByDesc(pagination);
             }
         } else {
-            pagination = PageRequest.of(page, size, sort);
+            capacitiesPage = capacityRepository.findAll(sortPagination);
         }
 
-        List<CapacityEntity> capacities;
-        if (sortByTechnologiesCount) {
-            capacities = capacityRepository.findAllWithTechnologiesOrderByTechnologiesCount(pagination).getContent();
-        } else {
-            capacities = capacityRepository.findAllWithTechnologies(pagination).getContent();
-        }
+        List<CapacityEntity> capacities = capacitiesPage.getContent();
 
         if (capacities.isEmpty()) {
             throw new NotFoundException("No registered capacities found");

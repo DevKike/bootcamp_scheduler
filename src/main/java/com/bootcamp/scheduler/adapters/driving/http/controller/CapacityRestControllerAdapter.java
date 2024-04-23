@@ -6,7 +6,6 @@ import com.bootcamp.scheduler.adapters.driving.http.mapper.ICapacityRequestMappe
 import com.bootcamp.scheduler.adapters.driving.http.mapper.ICapacityResponseMapper;
 import com.bootcamp.scheduler.domain.api.ICapacityServicePort;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -35,7 +34,7 @@ public class CapacityRestControllerAdapter {
     }
 
     @GetMapping("/getAllCapacities")
-    public ResponseEntity<List<CapacityResponse>> getAllCapacities(@RequestParam Integer page, @RequestParam Integer size, @RequestParam Sort.Direction direction, @RequestParam(required = false, defaultValue = "false") boolean sortByTechnologiesCount, @RequestParam(required = false, defaultValue = "true") boolean orderByTechCountAscending) {
-        return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacities(page, size, direction, sortByTechnologiesCount, orderByTechCountAscending)));
+    public ResponseEntity<List<CapacityResponse>> getAllCapacities(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false, defaultValue = "true") boolean isAscending, @RequestParam(required = false, defaultValue = "false") boolean orderByTechCount) {
+        return ResponseEntity.ok(capacityResponseMapper.toCapacityResponseList(capacityServicePort.getAllCapacities(page, size, isAscending, orderByTechCount)));
     }
 }

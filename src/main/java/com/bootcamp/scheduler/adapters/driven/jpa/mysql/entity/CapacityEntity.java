@@ -31,7 +31,4 @@ public class CapacityEntity {
             inverseJoinColumns = @JoinColumn(name = "technology_id")
     )
     private Set<TechnologyEntity> technologies;
-
-    @ManyToMany(mappedBy = "capacities")
-    private Set<BootcampEntity> bootcamps;
 }
