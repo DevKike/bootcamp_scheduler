@@ -1,6 +1,7 @@
 package com.bootcamp.scheduler.configuration.exceptionhandler;
 
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.DateException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
 import com.bootcamp.scheduler.configuration.Constants;
 import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
@@ -35,7 +36,7 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(AlreadyExistsException.class)
-    public ResponseEntity<ExceptionResponse> handleTechnologyAlreadyExistsException(AlreadyExistsException exception) {
+    public ResponseEntity<ExceptionResponse> handleAlreadyExistsException(AlreadyExistsException exception) {
         return ResponseEntity.status(HttpStatus.CONFLICT).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.CONFLICT.toString(),
@@ -44,12 +45,20 @@ public class ControllerAdvisor {
     }
 
     @ExceptionHandler(NotFoundException.class)
-    public ResponseEntity<ExceptionResponse> handleTechnologiesNotFoundException(NotFoundException exception) {
+    public ResponseEntity<ExceptionResponse> handleNotFoundException(NotFoundException exception) {
         return ResponseEntity.status(HttpStatus.NOT_FOUND).body(new ExceptionResponse(
                 exception.getMessage(),
                 HttpStatus.NOT_FOUND.toString(),
                 LocalDateTime.now()
+        ));
+    }
 
+    @ExceptionHandler(DateException.class)
+    public ResponseEntity<ExceptionResponse> handleDateException(DateException exception) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ExceptionResponse(
+           exception.getMessage(),
+           HttpStatus.BAD_REQUEST.toString(),
+           LocalDateTime.now()
         ));
     }
 }
