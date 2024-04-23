@@ -11,8 +11,13 @@ import com.bootcamp.scheduler.domain.exception.SizeException;
 import com.bootcamp.scheduler.domain.model.Bootcamp;
 import com.bootcamp.scheduler.domain.spi.IBootcampPersistencePort;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -69,5 +74,31 @@ public class BootcampAdapter implements IBootcampPersistencePort {
 
         bootcampEntity.getCapacities().addAll(newCapacities);
         bootcampRepository.save(bootcampEntity);
+    }
+
+    @Override
+    public List<Bootcamp> getAllBootcamps(Integer page, Integer size, boolean isAscending, boolean orderByCapCount) {
+        Page<BootcampEntity> bootcampsPage;
+        String direction = isAscending ? "ASC" : "DESC";
+        Pageable pagination = PageRequest.of(page, size);
+        Pageable sortedPagination = (PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "name")));
+
+        if (orderByCapCount) {
+            if (isAscending) {
+                bootcampsPage = bootcampRepository.findAllWitchCapacitiesOrderByAsc(pagination);
+            } else {
+                bootcampsPage = bootcampRepository.findAllWitchCapacitiesOrderByDesc(pagination);
+            }
+        } else {
+            bootcampsPage = bootcampRepository.findAll(sortedPagination);
+        }
+
+        List<BootcampEntity> bootcamps = bootcampsPage.getContent();
+        
+        if (bootcamps.isEmpty()) {
+            throw new NotFoundException("No registered bootcamps found");
+        }
+        
+        return bootcampEntityMapper.toModelList(bootcamps);
     }
 }
