@@ -1,5 +1,6 @@
 package com.bootcamp.scheduler.adapters.driven.jpa.mysql.adapter;
 
+import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.DateException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.mapper.IVersionEntityMapper;
 import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.IBootcampRepository;
@@ -7,6 +8,8 @@ import com.bootcamp.scheduler.adapters.driven.jpa.mysql.repository.IVersionRepos
 import com.bootcamp.scheduler.domain.model.Version;
 import com.bootcamp.scheduler.domain.spi.IVersionPersistencePort;
 import lombok.RequiredArgsConstructor;
+
+import java.time.LocalDate;
 
 @RequiredArgsConstructor
 public class VersionAdapter implements IVersionPersistencePort {
@@ -18,6 +21,13 @@ public class VersionAdapter implements IVersionPersistencePort {
     public void addVersion(Version version) {
         if (!bootcampRepository.existsById(version.getBootcamp().getId())) {
             throw new NotFoundException("No registered bootcamp found with id " + version.getBootcamp().getId());
+        }
+
+        LocalDate startDate = version.getStartDate();
+        LocalDate endDate = version.getEndDate();
+
+        if (endDate.isBefore(startDate)) {
+            throw new DateException("End date cannot be less than the start date");
         }
 
         versionRepository.save(versionEntityMapper.toEntity(version));
