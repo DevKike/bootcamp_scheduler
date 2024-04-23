@@ -19,10 +19,11 @@ public class TechnologyEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(unique = true)
     private String name;
 
     private String description;
 
-    @ManyToMany(mappedBy = "technologies", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @ManyToMany(mappedBy = "technologies")
     private Set<CapacityEntity> capacities;
 }
