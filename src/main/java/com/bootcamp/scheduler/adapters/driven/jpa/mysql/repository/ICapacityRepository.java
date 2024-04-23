@@ -12,9 +12,6 @@ public interface ICapacityRepository extends JpaRepository<CapacityEntity, Long>
     Optional<CapacityEntity> findByName(String name);
     Optional<CapacityEntity> findById(Long id);
 
-    @Query("SELECT c FROM CapacityEntity c JOIN FETCH c.technologies")
-    Page<CapacityEntity> findAllWithTechnologies(Pageable pageable);
-
     @Query("SELECT c FROM CapacityEntity c ORDER BY SIZE(c.technologies) ASC")
     Page<CapacityEntity> findAllWithTechnologiesOrderByAsc(Pageable pageable);
 
