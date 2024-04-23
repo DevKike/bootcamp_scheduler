@@ -17,7 +17,6 @@ import java.util.Set;
 public class TechnologyEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "technology_id")
     private Long id;
 
     private String name;
