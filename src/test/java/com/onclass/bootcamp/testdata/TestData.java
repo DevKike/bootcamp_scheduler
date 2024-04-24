@@ -1,13 +1,13 @@
-package com.bootcamp.scheduler.testdata;
+package com.onclass.bootcamp.testdata;
 
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.entity.TechnologyEntity;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.NotFoundException;
-import com.bootcamp.scheduler.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
-import com.bootcamp.scheduler.adapters.driving.http.dto.request.AddTechnologyRequest;
-import com.bootcamp.scheduler.adapters.driving.http.dto.response.TechnologyResponse;
-import com.bootcamp.scheduler.domain.exception.EmptyFieldException;
-import com.bootcamp.scheduler.domain.exception.MaxSizeExceededException;
-import com.bootcamp.scheduler.domain.model.Technology;
+import com.onclass.bootcamp.adapters.driven.jpa.mysql.entity.TechnologyEntity;
+import com.onclass.bootcamp.adapters.driven.jpa.mysql.exception.AlreadyExistsException;
+import com.onclass.bootcamp.adapters.driven.jpa.mysql.exception.NotFoundException;
+import com.onclass.bootcamp.adapters.driving.http.dto.request.AddTechnologyRequest;
+import com.onclass.bootcamp.adapters.driving.http.dto.response.TechnologyResponse;
+import com.onclass.bootcamp.domain.exception.EmptyFieldException;
+import com.onclass.bootcamp.domain.exception.SizeException;
+import com.onclass.bootcamp.domain.model.Technology;
 import org.springframework.data.domain.Sort;
 
 import java.util.ArrayList;
@@ -58,8 +58,8 @@ public class TestData {
         return new EmptyFieldException("emptyField");
     }
 
-    public static MaxSizeExceededException getMaxSizeExceededException() {
-        return new MaxSizeExceededException("Max size exceeded for the request");
+    public static SizeException getMaxSizeExceededException() {
+        return new SizeException("Max size exceeded for the request");
     }
 
     public static AlreadyExistsException getTechnologyAlreadyExistsException() {
