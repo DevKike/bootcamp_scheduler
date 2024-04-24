@@ -1,3 +1,3 @@
 On Class Project
 - 
-A Project for the bootcamp "Power Up 2024" by Pragma
+A project for Pragma's "Power Up 2024" bootcamp
