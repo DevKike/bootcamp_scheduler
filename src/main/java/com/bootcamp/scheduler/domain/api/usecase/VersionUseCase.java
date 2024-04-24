@@ -19,7 +19,7 @@ public class VersionUseCase implements IVersionServicePort {
     }
 
     @Override
-    public List<Version> getAllVersions(Integer page, Integer size, boolean isAscending) {
-        return versionPersistencePort.getAllVersions(page, size, isAscending);
+    public List<Version> getAllBy(Integer page, Integer size, boolean isAscending, boolean orderByMaxQuota) {
+        return versionPersistencePort.getAllVersions(page, size, isAscending, orderByMaxQuota);
     }
 }

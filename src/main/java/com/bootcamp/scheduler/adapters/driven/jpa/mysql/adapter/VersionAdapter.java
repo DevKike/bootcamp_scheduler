@@ -40,11 +40,17 @@ public class VersionAdapter implements IVersionPersistencePort {
     }
 
     @Override
-    public List<Version> getAllVersions(Integer page, Integer size, boolean isAscending) {
+    public List<Version> getAllVersions(Integer page, Integer size, boolean isAscending, boolean orderByMaxQuota) {
         String direction = isAscending ? "ASC" : "DESC";
-        Pageable sortedPaginationByName = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "bootcamp.name"));
+        Pageable sortedPagination;
 
-        Page<VersionEntity> versionsPage = versionRepository.findAll(sortedPaginationByName);
+        if (orderByMaxQuota) {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "maxNumOfStudents"));
+        } else {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "bootcamp.name"));
+        }
+
+        Page<VersionEntity> versionsPage = versionRepository.findAll(sortedPagination);
         List<VersionEntity> versions = versionsPage.getContent();
 
         return versionEntityMapper.toModelList(versions);

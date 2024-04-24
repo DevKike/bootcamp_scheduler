@@ -6,5 +6,5 @@ import java.util.List;
 
 public interface IVersionPersistencePort {
     void addVersion(Version version);
-    List<Version> getAllVersions(Integer page, Integer size, boolean isAscending);
+    List<Version> getAllVersions(Integer page, Integer size, boolean isAscending, boolean orderByMaxQuota);
 }
