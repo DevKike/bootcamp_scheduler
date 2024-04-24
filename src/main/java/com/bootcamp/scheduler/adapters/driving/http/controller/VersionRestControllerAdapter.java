@@ -27,7 +27,7 @@ public class VersionRestControllerAdapter {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<VersionResponse>> getAll(@RequestParam Integer page, Integer size, boolean isAscending, boolean orderByMaxQuota) {
-        return ResponseEntity.ok(versionResponseMapper.toVersionResponseList(versionServicePort.getAllBy(page, size, isAscending, orderByMaxQuota)));
+    public ResponseEntity<List<VersionResponse>> getAll(@RequestParam Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
+        return ResponseEntity.ok(versionResponseMapper.toVersionResponseList(versionServicePort.getAllBy(page, size, isAscending, orderByStartDate, orderByMaxQuota)));
     }
 }

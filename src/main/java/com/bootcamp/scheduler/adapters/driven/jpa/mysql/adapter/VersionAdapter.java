@@ -40,12 +40,14 @@ public class VersionAdapter implements IVersionPersistencePort {
     }
 
     @Override
-    public List<Version> getAllVersions(Integer page, Integer size, boolean isAscending, boolean orderByMaxQuota) {
+    public List<Version> getAllVersions(Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
         String direction = isAscending ? "ASC" : "DESC";
         Pageable sortedPagination;
 
         if (orderByMaxQuota) {
             sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "maxNumOfStudents"));
+        } else if (orderByStartDate) {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "startDate"));
         } else {
             sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "bootcamp.name"));
         }
@@ -55,4 +57,5 @@ public class VersionAdapter implements IVersionPersistencePort {
 
         return versionEntityMapper.toModelList(versions);
     }
+
 }
