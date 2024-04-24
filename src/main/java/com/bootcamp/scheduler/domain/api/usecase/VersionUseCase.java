@@ -22,4 +22,9 @@ public class VersionUseCase implements IVersionServicePort {
     public List<Version> getAllBy(Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
         return versionPersistencePort.getAllVersions(page, size, isAscending, orderByStartDate, orderByMaxQuota);
     }
+
+    @Override
+    public List<Version> getByBootcampId(Long bootcampId, Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
+        return versionPersistencePort.getByBootcampId(bootcampId, page, size, isAscending, orderByStartDate, orderByMaxQuota);
+    }
 }

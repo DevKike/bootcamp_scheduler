@@ -58,4 +58,26 @@ public class VersionAdapter implements IVersionPersistencePort {
         return versionEntityMapper.toModelList(versions);
     }
 
+    @Override
+    public List<Version> getByBootcampId(Long bootcampId, Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
+        String direction = isAscending ? "ASC" : "DESC";
+        Pageable sortedPagination;
+
+        if (orderByMaxQuota) {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "maxNumOfStudents"));
+        } else if (orderByStartDate) {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "startDate"));
+        } else {
+            sortedPagination = PageRequest.of(page, size, Sort.by(Sort.Direction.fromString(direction), "bootcamp.name"));
+        }
+
+        Page<VersionEntity> versionsPage = versionRepository.findByBootcampId(bootcampId, sortedPagination);
+        List<VersionEntity> versions = versionsPage.getContent();
+
+        if (versions.isEmpty()) {
+            throw new NotFoundException("No versions found for bootcamp with ID: " + bootcampId);
+        }
+
+        return versionEntityMapper.toModelList(versions);
+    }
 }

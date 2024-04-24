@@ -27,7 +27,12 @@ public class VersionRestControllerAdapter {
     }
 
     @GetMapping("/getAll")
-    public ResponseEntity<List<VersionResponse>> getAll(@RequestParam Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
+    public ResponseEntity<List<VersionResponse>> getAllVersions(@RequestParam Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
         return ResponseEntity.ok(versionResponseMapper.toVersionResponseList(versionServicePort.getAllBy(page, size, isAscending, orderByStartDate, orderByMaxQuota)));
+    }
+
+    @GetMapping("/getBy/{bootcampId}")
+    public ResponseEntity<List<VersionResponse>> getVersionsByBootcampId(@PathVariable Long bootcampId, @RequestParam Integer page, Integer size, boolean isAscending, boolean orderByStartDate, boolean orderByMaxQuota) {
+        return ResponseEntity.ok(versionResponseMapper.toVersionResponseList(versionServicePort.getByBootcampId(bootcampId, page, size, isAscending, orderByStartDate, orderByMaxQuota)));
     }
 }
